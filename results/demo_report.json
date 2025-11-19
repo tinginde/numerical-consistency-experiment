@@ -1,0 +1,219 @@
+{
+  "accuracy": {
+    "total_responses": 90,
+    "correct": 83,
+    "incorrect": 7,
+    "no_answer": 0,
+    "accuracy": 0.9222222222222223,
+    "errors": [
+      {
+        "question_id": "arith_add_001",
+        "version": "contextualized",
+        "ground_truth": 115,
+        "extracted": 107.0,
+        "response": "107",
+        "error_type": "incorrect_answer"
+      },
+      {
+        "question_id": "arith_sub_002",
+        "version": "direct",
+        "ground_truth": 443,
+        "extracted": 434.0,
+        "response": "答案是 434",
+        "error_type": "incorrect_answer"
+      },
+      {
+        "question_id": "arith_mul_002",
+        "version": "contextualized",
+        "ground_truth": 2574,
+        "extracted": 2564.0,
+        "response": "2564",
+        "error_type": "incorrect_answer"
+      },
+      {
+        "question_id": "arith_mul_002",
+        "version": "contextualized",
+        "ground_truth": 2574,
+        "extracted": 2584.0,
+        "response": "答案是 2584",
+        "error_type": "incorrect_answer"
+      },
+      {
+        "question_id": "arith_div_001",
+        "version": "direct",
+        "ground_truth": 12,
+        "extracted": 15.0,
+        "response": "計算結果為 15",
+        "error_type": "incorrect_answer"
+      },
+      {
+        "question_id": "arith_div_003",
+        "version": "direct",
+        "ground_truth": 19.91,
+        "extracted": 16.91,
+        "response": "等於 16.91",
+        "error_type": "incorrect_answer"
+      },
+      {
+        "question_id": "arith_div_003",
+        "version": "contextualized",
+        "ground_truth": 19.91,
+        "extracted": 11.91,
+        "response": "等於 11.91",
+        "error_type": "incorrect_answer"
+      }
+    ]
+  },
+  "consistency": {
+    "per_question": [
+      {
+        "question_id": "arith_add_001",
+        "paraphrase_consistency": 1.0,
+        "retest_consistency": 0.8888888888888888,
+        "overall_consistency_score": 0.9444444444444444,
+        "version_answers": {
+          "direct": 115.0,
+          "contextualized": 115.0,
+          "variation": 115.0
+        }
+      },
+      {
+        "question_id": "arith_add_002",
+        "paraphrase_consistency": 1.0,
+        "retest_consistency": 1.0,
+        "overall_consistency_score": 1.0,
+        "version_answers": {
+          "direct": 984.0,
+          "contextualized": 984.0,
+          "variation": 984.0
+        }
+      },
+      {
+        "question_id": "arith_sub_001",
+        "paraphrase_consistency": 1.0,
+        "retest_consistency": 1.0,
+        "overall_consistency_score": 1.0,
+        "version_answers": {
+          "direct": 42.0,
+          "contextualized": 42.0,
+          "variation": 42.0
+        }
+      },
+      {
+        "question_id": "arith_sub_002",
+        "paraphrase_consistency": 1.0,
+        "retest_consistency": 0.8888888888888888,
+        "overall_consistency_score": 0.9444444444444444,
+        "version_answers": {
+          "direct": 443.0,
+          "contextualized": 443.0,
+          "variation": 443.0
+        }
+      },
+      {
+        "question_id": "arith_mul_001",
+        "paraphrase_consistency": 1.0,
+        "retest_consistency": 1.0,
+        "overall_consistency_score": 1.0,
+        "version_answers": {
+          "direct": 2328.0,
+          "contextualized": 2328.0,
+          "variation": 2328.0
+        }
+      },
+      {
+        "question_id": "arith_mul_002",
+        "paraphrase_consistency": 0.67,
+        "retest_consistency": 0.7777777777777777,
+        "overall_consistency_score": 0.7238888888888888,
+        "version_answers": {
+          "direct": 2574.0,
+          "contextualized": 2584.0,
+          "variation": 2574.0
+        }
+      },
+      {
+        "question_id": "arith_div_001",
+        "paraphrase_consistency": 1.0,
+        "retest_consistency": 0.8888888888888888,
+        "overall_consistency_score": 0.9444444444444444,
+        "version_answers": {
+          "direct": 12.0,
+          "contextualized": 12.0,
+          "variation": 12.0
+        }
+      },
+      {
+        "question_id": "arith_div_002",
+        "paraphrase_consistency": 1.0,
+        "retest_consistency": 1.0,
+        "overall_consistency_score": 1.0,
+        "version_answers": {
+          "direct": 15.0,
+          "contextualized": 15.0,
+          "variation": 15.0
+        }
+      },
+      {
+        "question_id": "arith_div_003",
+        "paraphrase_consistency": 1.0,
+        "retest_consistency": 0.7777777777777777,
+        "overall_consistency_score": 0.8888888888888888,
+        "version_answers": {
+          "direct": 19.91,
+          "contextualized": 19.91,
+          "variation": 19.91
+        }
+      },
+      {
+        "question_id": "arith_div_004",
+        "paraphrase_consistency": 1.0,
+        "retest_consistency": 1.0,
+        "overall_consistency_score": 1.0,
+        "version_answers": {
+          "direct": 45.0,
+          "contextualized": 45.0,
+          "variation": 45.0
+        }
+      }
+    ],
+    "average_paraphrase_consistency": 0.967,
+    "average_retest_consistency": 0.9222222222222222,
+    "average_overall_consistency_score": 0.9446111111111112
+  },
+  "error_analysis": {
+    "error_types": {
+      "incorrect_calculation": 7
+    },
+    "by_category": {
+      "arithmetic": {
+        "correct": 83,
+        "incorrect": 7,
+        "no_answer": 0
+      }
+    },
+    "by_operation": {
+      "addition": {
+        "correct": 17,
+        "incorrect": 1,
+        "no_answer": 0
+      },
+      "subtraction": {
+        "correct": 17,
+        "incorrect": 1,
+        "no_answer": 0
+      },
+      "multiplication": {
+        "correct": 16,
+        "incorrect": 2,
+        "no_answer": 0
+      },
+      "division": {
+        "correct": 33,
+        "incorrect": 3,
+        "no_answer": 0
+      }
+    }
+  },
+  "total_responses": 90
+}
