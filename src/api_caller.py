@@ -8,26 +8,52 @@ import json
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 import anthropic
+from openai import OpenAI
 
 
 class LLMTester:
-    """統一的 LLM API 呼叫介面"""
+    """統一的 LLM API 呼叫介面，支持 Claude 和 OpenAI"""
 
-    def __init__(self, model_name: str = "claude-sonnet-4-5-20250929", api_key: Optional[str] = None):
+    def __init__(
+        self,
+        provider: str = "claude",
+        model_name: Optional[str] = None,
+        api_key: Optional[str] = None
+    ):
         """
         Initialize LLM tester.
 
         Args:
-            model_name: Name of the model to use
+            provider: API provider ("claude" or "openai")
+            model_name: Name of the model to use (if None, uses default for provider)
             api_key: API key (if None, will use environment variable)
         """
-        self.model_name = model_name
-        self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY")
+        self.provider = provider.lower()
 
-        if not self.api_key:
-            raise ValueError("API key not found. Set ANTHROPIC_API_KEY environment variable.")
+        if self.provider not in ["claude", "openai"]:
+            raise ValueError(f"Unsupported provider: {provider}. Choose 'claude' or 'openai'.")
 
-        self.client = anthropic.Anthropic(api_key=self.api_key)
+        # Set model name based on provider
+        if model_name:
+            self.model_name = model_name
+        else:
+            if self.provider == "claude":
+                self.model_name = "claude-sonnet-4-5-20250929"
+            else:  # openai
+                self.model_name = "gpt-4o"
+
+        # Get API key
+        if self.provider == "claude":
+            self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY")
+            if not self.api_key:
+                raise ValueError("API key not found. Set ANTHROPIC_API_KEY environment variable.")
+            self.client = anthropic.Anthropic(api_key=self.api_key)
+        else:  # openai
+            self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+            if not self.api_key:
+                raise ValueError("API key not found. Set OPENAI_API_KEY environment variable.")
+            self.client = OpenAI(api_key=self.api_key)
+
         self.responses = []
 
     def query(self, question: str, temperature: float = 0.0, max_retries: int = 3) -> Dict[str, Any]:
@@ -46,24 +72,41 @@ class LLMTester:
             try:
                 start_time = time.time()
 
-                message = self.client.messages.create(
-                    model=self.model_name,
-                    max_tokens=1024,
-                    temperature=temperature,
-                    messages=[
-                        {
-                            "role": "user",
-                            "content": f"{question}\n\n請直接給出數值答案。"
-                        }
-                    ]
-                )
+                if self.provider == "claude":
+                    message = self.client.messages.create(
+                        model=self.model_name,
+                        max_tokens=1024,
+                        temperature=temperature,
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": f"{question}\n\n請直接給出數值答案。"
+                            }
+                        ]
+                    )
+                    answer_text = message.content[0].text
+
+                else:  # openai
+                    response = self.client.chat.completions.create(
+                        model=self.model_name,
+                        max_tokens=1024,
+                        temperature=temperature,
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": f"{question}\n\n請直接給出數值答案。"
+                            }
+                        ]
+                    )
+                    answer_text = response.choices[0].message.content
 
                 end_time = time.time()
 
                 response_data = {
                     "question": question,
-                    "answer": message.content[0].text,
+                    "answer": answer_text,
                     "model": self.model_name,
+                    "provider": self.provider,
                     "temperature": temperature,
                     "response_time": end_time - start_time,
                     "timestamp": datetime.now().isoformat(),
@@ -80,6 +123,7 @@ class LLMTester:
                         "question": question,
                         "answer": None,
                         "model": self.model_name,
+                        "provider": self.provider,
                         "temperature": temperature,
                         "response_time": None,
                         "timestamp": datetime.now().isoformat(),
@@ -167,29 +211,52 @@ class LLMTester:
 
 def main():
     """Test the API caller with a simple question"""
-    print("測試 Claude API 連接...")
+    import sys
 
-    # Check if API key is available
-    api_key = os.getenv("ANTHROPIC_API_KEY")
-    if not api_key:
-        print("錯誤: 未設置 ANTHROPIC_API_KEY 環境變數")
-        print("請執行: export ANTHROPIC_API_KEY='your-api-key'")
+    # Determine which provider to test
+    provider = "claude"
+    if len(sys.argv) > 1:
+        provider = sys.argv[1].lower()
+
+    if provider not in ["claude", "openai"]:
+        print("用法: python api_caller.py [claude|openai]")
         return
 
-    tester = LLMTester()
+    print(f"測試 {provider.upper()} API 連接...")
 
-    # Test with a simple question
-    test_question = "計算 234 + 567"
-    print(f"\n測試問題: {test_question}")
-
-    response = tester.query(test_question)
-
-    if response["success"]:
-        print(f"✓ 成功!")
-        print(f"回應: {response['answer']}")
-        print(f"回應時間: {response['response_time']:.2f} 秒")
+    # Check if API key is available
+    if provider == "claude":
+        api_key = os.getenv("ANTHROPIC_API_KEY")
+        key_name = "ANTHROPIC_API_KEY"
     else:
-        print(f"✗ 失敗: {response['error']}")
+        api_key = os.getenv("OPENAI_API_KEY")
+        key_name = "OPENAI_API_KEY"
+
+    if not api_key:
+        print(f"錯誤: 未設置 {key_name} 環境變數")
+        print(f"請執行: export {key_name}='your-api-key'")
+        return
+
+    try:
+        tester = LLMTester(provider=provider)
+
+        # Test with a simple question
+        test_question = "計算 234 + 567"
+        print(f"\n測試問題: {test_question}")
+        print(f"使用模型: {tester.model_name}")
+
+        response = tester.query(test_question)
+
+        if response["success"]:
+            print(f"✓ 成功!")
+            print(f"提供商: {response['provider']}")
+            print(f"回應: {response['answer']}")
+            print(f"回應時間: {response['response_time']:.2f} 秒")
+        else:
+            print(f"✗ 失敗: {response['error']}")
+
+    except Exception as e:
+        print(f"✗ 初始化失敗: {e}")
 
 
 if __name__ == "__main__":

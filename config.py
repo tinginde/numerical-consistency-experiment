@@ -16,9 +16,15 @@ for dir_path in [DATA_DIR, RESULTS_DIR, VIZ_DIR, RESPONSES_DIR]:
     dir_path.mkdir(parents=True, exist_ok=True)
 
 # API Configuration
-# Note: API key should be set as environment variable ANTHROPIC_API_KEY
+# Note: API keys should be set as environment variables
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-MODEL_NAME = "claude-sonnet-4-5-20250929"  # Claude Sonnet 4.5
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+
+# Model configuration
+DEFAULT_PROVIDER = "claude"  # Options: "claude" or "openai"
+CLAUDE_MODEL = "claude-sonnet-4-5-20250929"  # Claude Sonnet 4.5
+OPENAI_MODEL = "gpt-4o"  # GPT-4o
+MODEL_NAME = CLAUDE_MODEL  # Default model (for backward compatibility)
 
 # Experiment Configuration
 NUM_QUESTIONS_PER_CATEGORY = 25  # For full experiment
@@ -41,6 +47,7 @@ PARAPHRASE_TYPES = ["direct", "contextualized", "variation"]
 QUESTIONS_FILE = DATA_DIR / "questions.json"
 GROUND_TRUTH_FILE = DATA_DIR / "ground_truth.json"
 CLAUDE_RESPONSES_FILE = RESPONSES_DIR / "claude_responses.json"
+OPENAI_RESPONSES_FILE = RESPONSES_DIR / "openai_responses.json"
 ACCURACY_RESULTS_FILE = RESULTS_DIR / "accuracy_results.csv"
 CONSISTENCY_RESULTS_FILE = RESULTS_DIR / "consistency_results.csv"
 ERROR_ANALYSIS_FILE = RESULTS_DIR / "error_analysis.csv"
