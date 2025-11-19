@@ -1,0 +1,8 @@
+question_id,version,ground_truth,extracted,response,error_type
+arith_add_001,contextualized,115.0,107.0,107,incorrect_answer
+arith_sub_002,direct,443.0,434.0,答案是 434,incorrect_answer
+arith_mul_002,contextualized,2574.0,2564.0,2564,incorrect_answer
+arith_mul_002,contextualized,2574.0,2584.0,答案是 2584,incorrect_answer
+arith_div_001,direct,12.0,15.0,計算結果為 15,incorrect_answer
+arith_div_003,direct,19.91,16.91,等於 16.91,incorrect_answer
+arith_div_003,contextualized,19.91,11.91,等於 11.91,incorrect_answer

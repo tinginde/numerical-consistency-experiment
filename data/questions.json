@@ -1,0 +1,152 @@
+[
+  {
+    "id": "arith_add_001",
+    "category": "arithmetic",
+    "operation": "addition",
+    "operands": [
+      91,
+      24
+    ],
+    "ground_truth": 115,
+    "versions": {
+      "direct": "計算 91 + 24",
+      "contextualized": "小明有 91 元，媽媽又給他 24 元，他現在有多少錢？",
+      "variation": "91 加上 24 等於多少？"
+    }
+  },
+  {
+    "id": "arith_add_002",
+    "category": "arithmetic",
+    "operation": "addition",
+    "operands": [
+      125,
+      859
+    ],
+    "ground_truth": 984,
+    "versions": {
+      "direct": "計算 125 + 859",
+      "contextualized": "小明有 125 元，媽媽又給他 859 元，他現在有多少錢？",
+      "variation": "125 加上 859 等於多少？"
+    }
+  },
+  {
+    "id": "arith_sub_001",
+    "category": "arithmetic",
+    "operation": "subtraction",
+    "operands": [
+      67,
+      25
+    ],
+    "ground_truth": 42,
+    "versions": {
+      "direct": "計算 67 - 25",
+      "contextualized": "書店有 67 本書，賣出了 25 本，還剩下幾本？",
+      "variation": "67 減去 25 是多少？"
+    }
+  },
+  {
+    "id": "arith_sub_002",
+    "category": "arithmetic",
+    "operation": "subtraction",
+    "operands": [
+      614,
+      171
+    ],
+    "ground_truth": 443,
+    "versions": {
+      "direct": "計算 614 - 171",
+      "contextualized": "書店有 614 本書，賣出了 171 本，還剩下幾本？",
+      "variation": "614 減去 171 是多少？"
+    }
+  },
+  {
+    "id": "arith_mul_001",
+    "category": "arithmetic",
+    "operation": "multiplication",
+    "operands": [
+      24,
+      97
+    ],
+    "ground_truth": 2328,
+    "versions": {
+      "direct": "計算 24 × 97",
+      "contextualized": "一盒蛋糕有 97 個，買了 24 盒，總共有幾個蛋糕？",
+      "variation": "24 和 97 相乘的結果是什麼？"
+    }
+  },
+  {
+    "id": "arith_mul_002",
+    "category": "arithmetic",
+    "operation": "multiplication",
+    "operands": [
+      858,
+      3
+    ],
+    "ground_truth": 2574,
+    "versions": {
+      "direct": "計算 858 × 3",
+      "contextualized": "一盒蛋糕有 3 個，買了 858 盒，總共有幾個蛋糕？",
+      "variation": "858 和 3 相乘的結果是什麼？"
+    }
+  },
+  {
+    "id": "arith_div_001",
+    "category": "arithmetic",
+    "operation": "division",
+    "operands": [
+      216,
+      18
+    ],
+    "ground_truth": 12,
+    "versions": {
+      "direct": "計算 216 ÷ 18",
+      "contextualized": "有 216 顆糖果要平分給 18 個小朋友，每個人可以分到幾顆？",
+      "variation": "216 除以 18 等於多少？"
+    }
+  },
+  {
+    "id": "arith_div_002",
+    "category": "arithmetic",
+    "operation": "division",
+    "operands": [
+      77,
+      5
+    ],
+    "ground_truth": 15,
+    "versions": {
+      "direct": "計算 77 ÷ 5",
+      "contextualized": "有 77 顆糖果要平分給 5 個小朋友，每個人可以分到幾顆？",
+      "variation": "77 除以 5 等於多少？"
+    }
+  },
+  {
+    "id": "arith_div_003",
+    "category": "arithmetic",
+    "operation": "division",
+    "operands": [
+      219,
+      11
+    ],
+    "ground_truth": 19.91,
+    "versions": {
+      "direct": "計算 219 ÷ 11",
+      "contextualized": "有 219 顆糖果要平分給 11 個小朋友，每個人可以分到幾顆？",
+      "variation": "219 除以 11 等於多少？"
+    }
+  },
+  {
+    "id": "arith_div_004",
+    "category": "arithmetic",
+    "operation": "division",
+    "operands": [
+      225,
+      5
+    ],
+    "ground_truth": 45,
+    "versions": {
+      "direct": "計算 225 ÷ 5",
+      "contextualized": "有 225 顆糖果要平分給 5 個小朋友，每個人可以分到幾顆？",
+      "variation": "225 除以 5 等於多少？"
+    }
+  }
+]
