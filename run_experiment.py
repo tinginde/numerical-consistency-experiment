@@ -52,19 +52,31 @@ def generate_questions(num_questions: int = 10):
     return questions
 
 
-def run_queries(questions, num_repetitions: int = 3):
-    """Query Claude API with all question variants"""
+def run_queries(questions, num_repetitions: int = 3, provider: str = "claude"):
+    """Query LLM API with all question variants"""
     print("\n" + "=" * 60)
-    print("步驟 2: 查詢 Claude API")
+    print(f"步驟 2: 查詢 {provider.upper()} API")
     print("=" * 60)
 
-    # Check API key
-    if not config.ANTHROPIC_API_KEY:
-        print("❌ 錯誤: 未設置 ANTHROPIC_API_KEY 環境變數")
-        print("請執行: export ANTHROPIC_API_KEY='your-api-key'")
-        sys.exit(1)
+    # Check API key based on provider
+    if provider == "claude":
+        if not config.ANTHROPIC_API_KEY:
+            print("❌ 錯誤: 未設置 ANTHROPIC_API_KEY 環境變數")
+            print("請執行: export ANTHROPIC_API_KEY='your-api-key'")
+            sys.exit(1)
+        api_key = config.ANTHROPIC_API_KEY
+        model_name = config.CLAUDE_MODEL
+        response_file = "claude_responses.json"
+    else:  # openai
+        if not config.OPENAI_API_KEY:
+            print("❌ 錯誤: 未設置 OPENAI_API_KEY 環境變數")
+            print("請執行: export OPENAI_API_KEY='your-api-key'")
+            sys.exit(1)
+        api_key = config.OPENAI_API_KEY
+        model_name = config.OPENAI_MODEL
+        response_file = "openai_responses.json"
 
-    tester = LLMTester(model_name=config.MODEL_NAME, api_key=config.ANTHROPIC_API_KEY)
+    tester = LLMTester(provider=provider, model_name=model_name, api_key=api_key)
 
     # Batch query
     responses = tester.batch_query(
@@ -75,7 +87,7 @@ def run_queries(questions, num_repetitions: int = 3):
     )
 
     # Save final responses
-    tester.save_all_responses(responses)
+    tester.save_all_responses(responses, filename=response_file)
 
     print(f"\n✓ 完成 {len(responses)} 次查詢")
 
@@ -180,6 +192,10 @@ def visualize_results(report):
 def main():
     """Main execution function"""
     parser = argparse.ArgumentParser(description='Run numerical consistency experiment')
+    parser.add_argument('--provider', type=str, default='claude', choices=['claude', 'openai'],
+                        help='API provider to use (default: claude)')
+    parser.add_argument('--model', type=str, default=None,
+                        help='Model name (overrides default for provider)')
     parser.add_argument('--num-questions', type=int, default=10,
                         help='Number of questions to generate (default: 10)')
     parser.add_argument('--num-repetitions', type=int, default=3,
@@ -191,12 +207,19 @@ def main():
 
     args = parser.parse_args()
 
+    # Determine model name
+    if args.model:
+        model_name = args.model
+    else:
+        model_name = config.CLAUDE_MODEL if args.provider == 'claude' else config.OPENAI_MODEL
+
     print("\n" + "=" * 60)
     print(" 數值推理一致性實驗")
     print(" Numerical Reasoning Consistency Experiment")
     print("=" * 60)
     print(f"開始時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"模型: {config.MODEL_NAME}")
+    print(f"API 提供商: {args.provider.upper()}")
+    print(f"模型: {model_name}")
     print(f"問題數: {args.num_questions}")
     print(f"重複次數: {args.num_repetitions}")
     print(f"總查詢次數: {args.num_questions} × 3 版本 × {args.num_repetitions} = {args.num_questions * 3 * args.num_repetitions}")
@@ -212,10 +235,12 @@ def main():
 
     # Step 2: Query API
     if not args.skip_queries:
-        responses = run_queries(questions, num_repetitions=args.num_repetitions)
+        responses = run_queries(questions, num_repetitions=args.num_repetitions, provider=args.provider)
     else:
         print("使用現有回應...")
-        with open(config.CLAUDE_RESPONSES_FILE, 'r', encoding='utf-8') as f:
+        # Determine which response file to load based on provider
+        response_file = config.CLAUDE_RESPONSES_FILE if args.provider == 'claude' else config.OPENAI_RESPONSES_FILE
+        with open(response_file, 'r', encoding='utf-8') as f:
             responses = json.load(f)
 
     # Step 3: Evaluate
