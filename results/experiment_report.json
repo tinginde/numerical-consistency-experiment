@@ -1,0 +1,215 @@
+{
+  "accuracy": {
+    "total_responses": 18,
+    "correct": 0,
+    "incorrect": 0,
+    "no_answer": 18,
+    "accuracy": 0.0,
+    "errors": [
+      {
+        "question_id": "arith_div_001",
+        "version": "direct",
+        "ground_truth": 11,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_001",
+        "version": "direct",
+        "ground_truth": 11,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_001",
+        "version": "contextualized",
+        "ground_truth": 11,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_001",
+        "version": "contextualized",
+        "ground_truth": 11,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_001",
+        "version": "variation",
+        "ground_truth": 11,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_001",
+        "version": "variation",
+        "ground_truth": 11,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_002",
+        "version": "direct",
+        "ground_truth": 25,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_002",
+        "version": "direct",
+        "ground_truth": 25,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_002",
+        "version": "contextualized",
+        "ground_truth": 25,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_002",
+        "version": "contextualized",
+        "ground_truth": 25,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_002",
+        "version": "variation",
+        "ground_truth": 25,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_002",
+        "version": "variation",
+        "ground_truth": 25,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_003",
+        "version": "direct",
+        "ground_truth": 12.21,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_003",
+        "version": "direct",
+        "ground_truth": 12.21,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_003",
+        "version": "contextualized",
+        "ground_truth": 12.21,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_003",
+        "version": "contextualized",
+        "ground_truth": 12.21,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_003",
+        "version": "variation",
+        "ground_truth": 12.21,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      },
+      {
+        "question_id": "arith_div_003",
+        "version": "variation",
+        "ground_truth": 12.21,
+        "extracted": null,
+        "response": null,
+        "error_type": "no_answer_found"
+      }
+    ]
+  },
+  "consistency": {
+    "per_question": [
+      {
+        "question_id": "arith_div_001",
+        "paraphrase_consistency": 0.33,
+        "retest_consistency": 1.0,
+        "overall_consistency_score": 0.665,
+        "version_answers": {
+          "direct": null,
+          "contextualized": null,
+          "variation": null
+        }
+      },
+      {
+        "question_id": "arith_div_002",
+        "paraphrase_consistency": 0.33,
+        "retest_consistency": 1.0,
+        "overall_consistency_score": 0.665,
+        "version_answers": {
+          "direct": null,
+          "contextualized": null,
+          "variation": null
+        }
+      },
+      {
+        "question_id": "arith_div_003",
+        "paraphrase_consistency": 0.33,
+        "retest_consistency": 1.0,
+        "overall_consistency_score": 0.665,
+        "version_answers": {
+          "direct": null,
+          "contextualized": null,
+          "variation": null
+        }
+      }
+    ],
+    "average_paraphrase_consistency": 0.33,
+    "average_retest_consistency": 1.0,
+    "average_overall_consistency_score": 0.665
+  },
+  "error_analysis": {
+    "error_types": {
+      "no_answer": 18
+    },
+    "by_category": {
+      "arithmetic": {
+        "correct": 0,
+        "incorrect": 0,
+        "no_answer": 18
+      }
+    },
+    "by_operation": {
+      "division": {
+        "correct": 0,
+        "incorrect": 0,
+        "no_answer": 18
+      }
+    }
+  },
+  "total_responses": 18
+}
