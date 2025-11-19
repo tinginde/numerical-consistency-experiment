@@ -155,14 +155,27 @@ class LLMTester:
 
     def _save_responses(self, responses: List[Dict[str, Any]], filename: str):
         """Save responses to JSON file"""
-        filepath = f"../data/responses/{filename}"
+        import sys
+        from pathlib import Path
+
+        # Get the project root directory
+        project_root = Path(__file__).parent.parent
+        responses_dir = project_root / "data" / "responses"
+        responses_dir.mkdir(parents=True, exist_ok=True)
+
+        filepath = responses_dir / filename
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(responses, f, ensure_ascii=False, indent=2)
 
     def save_all_responses(self, responses: List[Dict[str, Any]], filename: str = "claude_responses.json"):
         """Save all responses to final file"""
+        from pathlib import Path
+
         self._save_responses(responses, filename)
-        print(f"\n所有回應已儲存至: ../data/responses/{filename}")
+
+        project_root = Path(__file__).parent.parent
+        filepath = project_root / "data" / "responses" / filename
+        print(f"\n所有回應已儲存至: {filepath}")
 
 
 def main():
