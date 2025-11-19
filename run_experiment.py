@@ -52,19 +52,29 @@ def generate_questions(num_questions: int = 10):
     return questions
 
 
-def run_queries(questions, num_repetitions: int = 3):
-    """Query Claude API with all question variants"""
+def run_queries(questions, model_name: str, num_repetitions: int = 3):
+    """Query LLM API with all question variants"""
     print("\n" + "=" * 60)
-    print("步驟 2: 查詢 Claude API")
+    print("步驟 2: 查詢 LLM API")
     print("=" * 60)
 
+    # Detect provider
+    if any(x in model_name.lower() for x in ['gpt', 'davinci', 'turbo']):
+        provider = 'openai'
+        api_key_env = 'OPENAI_API_KEY'
+        api_key = os.getenv('OPENAI_API_KEY')
+    else:
+        provider = 'anthropic'
+        api_key_env = 'ANTHROPIC_API_KEY'
+        api_key = os.getenv('ANTHROPIC_API_KEY')
+
     # Check API key
-    if not config.ANTHROPIC_API_KEY:
-        print("❌ 錯誤: 未設置 ANTHROPIC_API_KEY 環境變數")
-        print("請執行: export ANTHROPIC_API_KEY='your-api-key'")
+    if not api_key:
+        print(f"❌ 錯誤: 未設置 {api_key_env} 環境變數")
+        print(f"請執行: export {api_key_env}='your-api-key'")
         sys.exit(1)
 
-    tester = LLMTester(model_name=config.MODEL_NAME, api_key=config.ANTHROPIC_API_KEY)
+    tester = LLMTester(model_name=model_name, api_key=api_key)
 
     # Batch query
     responses = tester.batch_query(
@@ -184,6 +194,8 @@ def main():
                         help='Number of questions to generate (default: 10)')
     parser.add_argument('--num-repetitions', type=int, default=3,
                         help='Number of repetitions per question variant (default: 3)')
+    parser.add_argument('--model', type=str, default=config.MODEL_NAME,
+                        help='Model to use (default: claude-sonnet-4-5-20250929). Examples: gpt-4o, gpt-3.5-turbo')
     parser.add_argument('--skip-generation', action='store_true',
                         help='Skip question generation (use existing questions)')
     parser.add_argument('--skip-queries', action='store_true',
@@ -196,7 +208,7 @@ def main():
     print(" Numerical Reasoning Consistency Experiment")
     print("=" * 60)
     print(f"開始時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"模型: {config.MODEL_NAME}")
+    print(f"模型: {args.model}")
     print(f"問題數: {args.num_questions}")
     print(f"重複次數: {args.num_repetitions}")
     print(f"總查詢次數: {args.num_questions} × 3 版本 × {args.num_repetitions} = {args.num_questions * 3 * args.num_repetitions}")
@@ -212,11 +224,18 @@ def main():
 
     # Step 2: Query API
     if not args.skip_queries:
-        responses = run_queries(questions, num_repetitions=args.num_repetitions)
+        responses = run_queries(questions, model_name=args.model, num_repetitions=args.num_repetitions)
     else:
         print("使用現有回應...")
-        with open(config.CLAUDE_RESPONSES_FILE, 'r', encoding='utf-8') as f:
-            responses = json.load(f)
+        # Try to load from model-specific file first
+        provider = 'openai' if any(x in args.model.lower() for x in ['gpt', 'turbo']) else 'anthropic'
+        response_file = config.RESPONSES_DIR / f"{provider}_responses.json"
+        if response_file.exists():
+            with open(response_file, 'r', encoding='utf-8') as f:
+                responses = json.load(f)
+        else:
+            with open(config.CLAUDE_RESPONSES_FILE, 'r', encoding='utf-8') as f:
+                responses = json.load(f)
 
     # Step 3: Evaluate
     report = evaluate_responses(responses)
