@@ -3,6 +3,9 @@ Configuration file for numerical consistency experiment.
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Project paths
 PROJECT_ROOT = Path(__file__).parent
@@ -21,10 +24,10 @@ ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
 # Model configuration
-DEFAULT_PROVIDER = "claude"  # Options: "claude" or "openai"
+DEFAULT_PROVIDER = "openai"  # Options: "claude" or "openai"
 CLAUDE_MODEL = "claude-sonnet-4-5-20250929"  # Claude Sonnet 4.5
 OPENAI_MODEL = "gpt-4o"  # GPT-4o
-MODEL_NAME = CLAUDE_MODEL  # Default model (for backward compatibility)
+MODEL_NAME = OPENAI_MODEL  # Default model (for backward compatibility)
 
 # Experiment Configuration
 NUM_QUESTIONS_PER_CATEGORY = 25  # For full experiment

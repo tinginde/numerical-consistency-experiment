@@ -52,7 +52,7 @@ def generate_questions(num_questions: int = 10):
     return questions
 
 
-def run_queries(questions, num_repetitions: int = 3, provider: str = "claude"):
+def run_queries(questions, num_repetitions: int = 3, provider: str = "openai"):
     """Query LLM API with all question variants"""
     print("\n" + "=" * 60)
     print(f"步驟 2: 查詢 {provider.upper()} API")
@@ -192,8 +192,8 @@ def visualize_results(report):
 def main():
     """Main execution function"""
     parser = argparse.ArgumentParser(description='Run numerical consistency experiment')
-    parser.add_argument('--provider', type=str, default='claude', choices=['claude', 'openai'],
-                        help='API provider to use (default: claude)')
+    parser.add_argument('--provider', type=str, default='openai', choices=['claude', 'openai'],
+                        help='API provider to use (default: openai)')
     parser.add_argument('--model', type=str, default=None,
                         help='Model name (overrides default for provider)')
     parser.add_argument('--num-questions', type=int, default=10,
