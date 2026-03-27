@@ -182,10 +182,3 @@ python run_experiment.py --skip-generation --skip-queries
 
 本專案供研究和教育用途使用。
 
-## 作者
-
-Tina - 2025-11-19
-
-## 致謝
-
-感謝 Anthropic 提供 Claude API 和 Claude Code 工具。
